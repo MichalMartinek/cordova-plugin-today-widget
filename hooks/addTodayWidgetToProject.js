@@ -88,6 +88,9 @@ module.exports = function (context) {
   var WIDGET_BUNDLE_SUFFIX = getCordovaParameter("WIDGET_BUNDLE_SUFFIX", contents);
   var ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = getCordovaParameter("ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", contents);
   var SWIFT_VERSION = getCordovaParameter("SWIFT_VERSION", contents);
+  var DEV_TEAM = getCordovaParameter("DEV_TEAM", contents);
+  var CODE_SIGN_IDENTITY = getCordovaParameter("CODE_SIGN_IDENTITY", contents);
+  var PROVISIONING_PROFILE = getCordovaParameter("PROVISIONING_PROFILE", contents);
 
   if (contents) {
     contents = contents.substring(contents.indexOf('<'));
@@ -357,6 +360,12 @@ module.exports = function (context) {
           if (typeof buildSettingsObj['PRODUCT_NAME'] !== 'undefined') {
             var productName = buildSettingsObj['PRODUCT_NAME'];
             if (productName.indexOf(widgetName) >= 0) {
+              if (DEV_TEAM && PROVISIONING_PROFILE && CODE_SIGN_IDENTITY) {
+                buildSettingsObj['DEVELOPMENT_TEAM'] = DEV_TEAM;
+                buildSettingsObj['CODE_SIGN_STYLE'] = 'Manual';
+                buildSettingsObj['PROVISIONING_PROFILE_SPECIFIER'] = '"' + PROVISIONING_PROFILE + '"';
+                buildSettingsObj['CODE_SIGN_IDENTITY'] = '"' + CODE_SIGN_IDENTITY + '"';
+              }
               if (addXcconfig) {
                 configurations[key].baseConfigurationReference =
                   xcconfigReference + ' /* ' + xcconfigFileName + ' */';

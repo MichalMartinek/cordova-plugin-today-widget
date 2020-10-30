@@ -362,7 +362,8 @@ module.exports = function (context) {
             var productName = buildSettingsObj['PRODUCT_NAME'];
             if (productName.indexOf(widgetName) >= 0) {
               if (DEV_TEAM && PROVISIONING_PROFILE && CODE_SIGN_IDENTITY && PRODUCT_BUNDLE_IDENTIFIER) {
-                buildSettingsObj['PRODUCT_BUNDLE_IDENTIFIER'] = PRODUCT_BUNDLE_IDENTIFIER;
+                console.log("writing changes")
+                buildSettingsObj['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.windytv.ios.widget';
                 buildSettingsObj['DEVELOPMENT_TEAM'] = DEV_TEAM;
                 buildSettingsObj['CODE_SIGN_STYLE'] = 'Manual';
                 buildSettingsObj['PROVISIONING_PROFILE_SPECIFIER'] = '"' + PROVISIONING_PROFILE + '"';

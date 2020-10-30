@@ -91,6 +91,7 @@ module.exports = function (context) {
   var DEV_TEAM = getCordovaParameter("DEV_TEAM", contents);
   var CODE_SIGN_IDENTITY = getCordovaParameter("CODE_SIGN_IDENTITY", contents);
   var PROVISIONING_PROFILE = getCordovaParameter("PROVISIONING_PROFILE", contents);
+  var PRODUCT_BUNDLE_IDENTIFIER = getCordovaParameter("PRODUCT_BUNDLE_IDENTIFIER", contents);
 
   if (contents) {
     contents = contents.substring(contents.indexOf('<'));
@@ -360,7 +361,8 @@ module.exports = function (context) {
           if (typeof buildSettingsObj['PRODUCT_NAME'] !== 'undefined') {
             var productName = buildSettingsObj['PRODUCT_NAME'];
             if (productName.indexOf(widgetName) >= 0) {
-              if (DEV_TEAM && PROVISIONING_PROFILE && CODE_SIGN_IDENTITY) {
+              if (DEV_TEAM && PROVISIONING_PROFILE && CODE_SIGN_IDENTITY && PRODUCT_BUNDLE_IDENTIFIER) {
+                buildSettingsObj['PRODUCT_BUNDLE_IDENTIFIER'] = PRODUCT_BUNDLE_IDENTIFIER;
                 buildSettingsObj['DEVELOPMENT_TEAM'] = DEV_TEAM;
                 buildSettingsObj['CODE_SIGN_STYLE'] = 'Manual';
                 buildSettingsObj['PROVISIONING_PROFILE_SPECIFIER'] = '"' + PROVISIONING_PROFILE + '"';
